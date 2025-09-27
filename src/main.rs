@@ -24,8 +24,15 @@ fn main() -> std::io::Result<()> {
         for line in reader.lines() {
             let line: String = line?;
             let words: Vec<&str> = line.trim().split_whitespace().collect();
-            let amount: i32 = words[2].trim().parse().expect("Wrong type");
-            intake += amount;
+
+            let current_local: DateTime<Local> = Local::now();
+            let custom_format = current_local.format("%Y-%m-%d");
+            let log_date: String = format!("{}", words[0]);
+            
+            if custom_format.to_string() == log_date {
+                let amount: i32 = words[2].trim().parse().expect("Wrong type");
+                intake += amount;   
+            }
         }
         println!("{}", intake)
     } else {
